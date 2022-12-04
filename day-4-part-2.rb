@@ -35,7 +35,7 @@ INPUT
 def main(input)
   input.lines(chomp: true).count do |line| 
     a,b = line.split(',')
-    a.to_range.overlaps??(b.to_range) || b.to_range.overlaps??(a.to_range)
+    a.to_range.overlaps?(b.to_range) || b.to_range.overlaps?(a.to_range)
   end
 end
 
