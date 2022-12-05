@@ -3,7 +3,7 @@
 require 'pry'
 
 class String
-  def column(n) = self[(n  * 4)..((n * 4) + 2)][/\S+/]
+  def column(index) = self[(index * 4)..((index * 4) + 2)][/\S+/]
 end
 
 input = <<-INPUT
@@ -19,32 +19,25 @@ move 1 from 1 to 2
 INPUT
 
 def main(input)
-  state, instructions = input.split("\n\n")
-
   stacks = []
-
-  state.each_line(chomp:true).take( state.lines.count - 1).each do |line|
-    0.upto(8).each do |n|
+  state, instructions = input.split("\n\n")
+  state.each_line(chomp: true).take(state.lines.count - 1).each do |line|
+    0.upto(state.lines.count - 1).each do |n|
       stacks[n] ||= []
       stacks[n].unshift(line.column(n)) if line.column(n)
     end
   end
   stacks.unshift nil
-  
   instructions.each_line(chomp: true) do |line|
     /move (?<count>\d+) from (?<from>\d+) to (?<to>\d+)/ =~ line
 
-    foo = []
-    count.to_i.times do 
-      # stacks[to.to_i].push stacks[from.to_i].pop
-      foo << stacks[from.to_i].pop
-    end
-    stacks[to.to_i] << foo.pop until foo.empty?
-
+    tmp = []
+    count.to_i.times { tmp << stacks[from.to_i].pop }
+    stacks[to.to_i] << tmp.pop until tmp.empty?
   end
 
   stacks.shift
-  stacks.map(&:last).map {|e| e[1]}.join
+  stacks.map(&:last).map { |e| e[1] }.join
 end
 
 input = DATA.read
