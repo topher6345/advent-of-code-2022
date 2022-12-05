@@ -1,17 +1,18 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'pry'
 require 'set'
 class String
-
   def common_item
-    a,b = chars.each_slice(size/ 2).to_a
+    a, b = chars.each_slice(size / 2).to_a
     a.to_set.intersection(b.to_set).first
   end
 
   def histogram
     result = {}
     each_char do |char|
-      result[char] ||= 0 
+      result[char] ||= 0
       result[char] += 1
     end
 
@@ -19,7 +20,7 @@ class String
   end
 end
 
-PRIORITIES = [nil, *'a'..'z', *'A'..'Z']
+PRIORITIES = [nil, *'a'..'z', *'A'..'Z'].freeze
 
 input = <<~INPUT
   vJrwpWtwJgWrhcsFMMfFFhFp
@@ -30,12 +31,10 @@ input = <<~INPUT
   CrZsJsPPZsGzwwsLwLmpwMDw
 INPUT
 
-
 def main(input)
-  input.lines(chomp: true).each_slice(3).sum do |a,b,c|
-
+  input.lines(chomp: true).each_slice(3).sum do |a, b, c|
     PRIORITIES.index(a.chars.to_set.intersection(b.chars.to_set).intersection(c.chars.to_set).first)
-  end 
+  end
 end
 
 input = DATA.read

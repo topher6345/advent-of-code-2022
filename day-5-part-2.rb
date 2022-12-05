@@ -1,4 +1,5 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'pry'
 
@@ -6,16 +7,16 @@ class String
   def column(index) = self[(index * 4)..((index * 4) + 2)][/\S+/]
 end
 
-input = <<-INPUT
-    [D]    
-[N] [C]    
-[Z] [M] [P]
- 1   2   3 
+input = <<~INPUT
+      [D]#{'    '}
+  [N] [C]#{'    '}
+  [Z] [M] [P]
+   1   2   3#{' '}
 
-move 1 from 2 to 1
-move 3 from 1 to 3
-move 2 from 2 to 1
-move 1 from 1 to 2
+  move 1 from 2 to 1
+  move 3 from 1 to 3
+  move 2 from 2 to 1
+  move 1 from 1 to 2
 INPUT
 
 def main(input)

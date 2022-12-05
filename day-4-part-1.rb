@@ -1,17 +1,14 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'pry'
 
-
 class String
-
-
   def to_range
-    a,b = split("-").map(&:to_i)
+    a, b = split('-').map(&:to_i)
     (a..b)
   end
-
 end
-
 
 class Range
   # Compare two ranges and see if they overlap each other
@@ -21,7 +18,6 @@ class Range
     other.begin == self.begin || cover?(other.begin) || other.cover?(self.begin)
   end
 end
-
 
 input = <<~INPUT
   2-4,6-8
@@ -33,9 +29,9 @@ input = <<~INPUT
 INPUT
 
 def main(input)
-  input.lines(chomp: true).count do |line| 
-    a,b = line.split(',')
-    a.to_range.overlaps??(b.to_range) || b.to_range.overlaps??(a.to_range)
+  input.lines(chomp: true).count do |line|
+    a, b = line.split(',')
+    a.to_range.overlaps?(b.to_range) || b.to_range.overlaps?(a.to_range)
   end
 end
 

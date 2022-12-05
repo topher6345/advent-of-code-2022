@@ -1,17 +1,16 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'pry'
 require 'set'
 class String
-
   def common_item
-    a,b = chars.each_slice(size/ 2).to_a
+    a, b = chars.each_slice(size / 2).to_a
     a.to_set.intersection(b.to_set).first
   end
 end
 
-
-PRIORITIES = [nil, *'a'..'z', *'A'..'Z']
-
+PRIORITIES = [nil, *'a'..'z', *'A'..'Z'].freeze
 
 input = <<~INPUT
   vJrwpWtwJgWrhcsFMMfFFhFp
@@ -22,9 +21,8 @@ input = <<~INPUT
   CrZsJsPPZsGzwwsLwLmpwMDw
 INPUT
 
-
 def main(input)
-  input.lines(chomp: true).map(&:common_item).sum {|e| PRIORITIES.index(e)}
+  input.lines(chomp: true).map(&:common_item).sum { |e| PRIORITIES.index(e) }
 end
 
 input = DATA.read

@@ -1,4 +1,6 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'pry'
 
 def score(opponent, player)
@@ -17,14 +19,13 @@ def score(opponent, player)
   end
 end
 
-
 input = <<~INPUT
   A Y
   B X
   C Z
 INPUT
 
-WEIGHTS = <<~WEIGHTS.lines(chomp: true).map(&:split).map {|a,b| [a,b.to_i]}.to_h
+WEIGHTS = <<~WEIGHTS.lines(chomp: true).map(&:split).transform_values(&:to_i)
   X 1
   Y 2
   Z 3
@@ -34,11 +35,11 @@ def main(input)
   result = 0
   input.lines(chomp: true).map(&:split).each do |(opponent, player)|
     result += \
-      if score(opponent, player) == 0
+      if score(opponent, player).zero?
         3 + WEIGHTS[player]
-      elsif score(opponent, player) < 0
+      elsif score(opponent, player).negative?
         WEIGHTS[player]
-      elsif score(opponent, player) > 0
+      elsif score(opponent, player).positive?
         6 + WEIGHTS[player]
       end
   end

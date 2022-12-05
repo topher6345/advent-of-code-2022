@@ -1,25 +1,27 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'pry'
 
 input = <<~INPUT
-1000
-2000
-3000
+  1000
+  2000
+  3000
 
-4000
+  4000
 
-5000
-6000
+  5000
+  6000
 
-7000
-8000
-9000
+  7000
+  8000
+  9000
 
-10000
+  10000
 INPUT
 
 def main(input)
-  input.split("\n\n").map {|e| e.split("\n").sum(&:to_i)}.max
+  input.split("\n\n").map { |e| e.split("\n").sum(&:to_i) }.max
 end
 
 input = DATA.read

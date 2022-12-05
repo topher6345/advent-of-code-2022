@@ -1,13 +1,13 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'pry'
 
+# X means you need to lose,
+# Y means you need to end the round in a draw,
+# and Z means you need to win. Good luck!"
 
-
- # X means you need to lose, 
- # Y means you need to end the round in a draw, 
- # and Z means you need to win. Good luck!"
-
-def score(opponent, player)
+def score(_opponent, player)
   case player
   when 'X' then -1
   when 'Y' then 0
@@ -17,12 +17,11 @@ def score(opponent, player)
   end
 end
 
-
 def complement(opponent, result)
   case [opponent, result.to_s]
-  when %w[A -1] then 3 
+  when %w[A -1] then 3
   when %w[A 0] then 1
-  when %w[A 1] then 2 
+  when %w[A 1] then 2
   when %w[B -1] then 1
   when %w[B 0] then 2
   when %w[B 1] then 3
@@ -35,14 +34,13 @@ def complement(opponent, result)
   end
 end
 
-
 input = <<~INPUT
   A Y
   B X
   C Z
 INPUT
 
-WEIGHTS = <<~WEIGHTS.lines(chomp: true).map(&:split).map {|a,b| [a,b.to_i]}.to_h
+WEIGHTS = <<~WEIGHTS.lines(chomp: true).map(&:split).transform_values(&:to_i)
   X 1
   Y 2
   Z 3
@@ -53,13 +51,13 @@ def main(input)
   input.lines(chomp: true).map(&:split).each do |(opponent, player)|
     s = score(opponent, player)
     result += \
-        if s == 0
-          3 + complement(opponent, s)
-        elsif s < 0
-          complement(opponent, s)
-        elsif s > 0
-          6 + complement(opponent, s)
-        end
+      if s.zero?
+        3 + complement(opponent, s)
+      elsif s.negative?
+        complement(opponent, s)
+      elsif s.positive?
+        6 + complement(opponent, s)
+      end
   end
   result
 end
