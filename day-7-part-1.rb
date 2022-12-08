@@ -19,13 +19,14 @@ INPUT
 
 def main(input)
   grid = input.lines(chomp: true).map(&:chars).map2(&:to_i)
+  grid_t = grid.transpose
   count = (grid.size * 4) - 4
   1.upto(grid.size - 2).each do |x|
     1.upto(grid.size - 2).each do |y|
       left = grid[x][0...y]
-      right = grid[x][(y + 1)..(grid.size)]
-      up = grid.transpose[x][0...y]
-      down = grid.transpose[x][(y + 1)..(grid.size)]
+      right = grid[x][(y + 1)..(-1)]
+      up = grid.transpose[y][0...x]
+      down = grid.transpose[y][(x + 1)..(-1)]
 
       f = proc {|e| e < grid[x][y] } 
       count +=1 if left.all?(&f) || right.all?(&f) || up.all?(&f) || down.all?(&f) 
